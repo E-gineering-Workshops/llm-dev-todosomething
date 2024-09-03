@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <title>Java App with HTMX</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${name}">Hello</h1>
+    <h2 th:text="${podname}">Served from PodName</h2>
+    <h2>Items List</h2>
+    <div id="items-list" hx-get="/list" hx-trigger="load">
+        <!-- Items will be loaded here -->
+    </div>
+
+    <form id="addForm" hx-post="/add" hx-target="#items-list" hx-swap="outerHTML">
+        <div class="input-group">
+            <input class="input-field" type="text" name="item" placeholder="item to add" required>
+            <button class="btn add-btn">Add Item</button>
+        </div>
+    </form>
+    <script>
+        document.body.addEventListener('htmx:afterRequest', function (event) {
+            if (event.detail.elt.id === 'addForm') {
+                event.detail.elt.reset();
+            }
+        })
+    </script>
+</div>
+</body>
+</html>

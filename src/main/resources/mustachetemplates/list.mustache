@@ -1,0 +1,8 @@
+<ul class='items-list' id='items-list'>
+    {{#testList}}
+    <li class='item'>
+        <span class='item-name'>{{.}}</span>
+        <button class='btn delete-btn' hx-post='/delete' hx-target='#items-list' hx-swap='outerHTML' hx-vals='{"item":{{.}}"}'>Delete</button>
+        </li>
+    {{/testList}}
+</ul>
