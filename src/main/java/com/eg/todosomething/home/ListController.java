@@ -33,7 +33,7 @@ public class ListController {
     public String list() {
 
         StringWriter writer = new StringWriter();
-        mustache.execute(writer, Map.of("testList",testList));
+        mustache.execute(writer, Map.of("testList", testList));
 
         return writer.toString();
     }
@@ -45,4 +45,17 @@ public class ListController {
                     return ServerResponse.ok().body(Mono.fromSupplier(this::list), String.class);
                 });
     }
+
+
+    public Mono<ServerResponse> handleDelete(ServerRequest request) {
+        return request.formData()
+                .flatMap(formData -> {
+                    String item = formData.getFirst("item");
+                    if (item != null) {
+                        testList.remove(item);
+                    }
+                    return ServerResponse.ok().body(Mono.fromSupplier(this::list), String.class);
+                });
+    }
+
 }

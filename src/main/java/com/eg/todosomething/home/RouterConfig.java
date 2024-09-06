@@ -13,6 +13,7 @@ public class RouterConfig {
     public RouterFunction<ServerResponse> route(ListController controller){
         return RouterFunctions.route()
                 .POST("/add", controller::handleFormPost)
+                .POST("/delete", controller::handleDelete)
                 .build();
     }
 }
