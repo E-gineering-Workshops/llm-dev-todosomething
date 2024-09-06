@@ -4,10 +4,6 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
-
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,24 +34,20 @@ public class ListController {
         return writer.toString();
     }
 
-    public Mono<ServerResponse> handleFormPost(ServerRequest request) {
-        return request.formData()
-                .flatMap(formData -> {
-                    testList.add(formData.getFirst("item"));
-                    return ServerResponse.ok().body(Mono.fromSupplier(this::list), String.class);
-                });
+    // Create a method to add an item to the list
+    @PostMapping("/add")
+    @ResponseBody
+    public String add(@RequestParam String item) {
+        testList.add(item);
+        return list();
     }
 
-
-    public Mono<ServerResponse> handleDelete(ServerRequest request) {
-        return request.formData()
-                .flatMap(formData -> {
-                    String item = formData.getFirst("item");
-                    if (item != null) {
-                        testList.remove(item);
-                    }
-                    return ServerResponse.ok().body(Mono.fromSupplier(this::list), String.class);
-                });
+    // Create a method to delete an item from the list
+    @PostMapping("/delete")
+    @ResponseBody
+    public String delete(@RequestParam String item) {
+        testList.remove(item);
+        return list();
     }
 
 }
