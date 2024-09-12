@@ -4,24 +4,25 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class ListController {
-    private final MustacheFactory mustacheFactory;
     private final RedisTemplate<String, String> redisTemplate;
 
-    List<String> testList = new ArrayList<>();
     private static final String TEST_LIST_KEY = "testList";
     private final Mustache mustache;
 
     // Constructor for ListController
     public ListController(MustacheFactory mustacheFactory, RedisTemplate<String, String> redisTemplate) {
-        this.mustacheFactory = mustacheFactory;
+        
         mustache = mustacheFactory.compile("mustachetemplates/list.mustache");
         this.redisTemplate = redisTemplate;
 

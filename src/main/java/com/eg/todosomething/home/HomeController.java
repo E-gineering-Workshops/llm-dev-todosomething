@@ -16,6 +16,7 @@ public class HomeController {
     }
 
 
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("name", person);
