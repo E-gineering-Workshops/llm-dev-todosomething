@@ -12,7 +12,7 @@ public class HomeController {
     String person = "";
     public HomeController(Environment environment) {
         person = "Hello " + environment.getProperty("PERSON","you");
-        podName = "Served from " + environment.getProperty("POD_NAME","default");
+        podName = "Served from " + environment.getProperty("HOSTNAME","default");
     }
 
 

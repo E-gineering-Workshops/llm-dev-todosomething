@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todosomething
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todosomething
+  template:
+    metadata:
+      labels:
+        app: todosomething
+    spec:
+      containers:
+        - name: todosomething
+          image: todosomething:1.0.0
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          env:
+            - name: SPRING_DATA_REDIS_HOST
+              value: "redis"
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
+            - name: PERSON
+              value: "Benjamin"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todosomething-service
+spec:
+  selector:
+    app: todosomething
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
