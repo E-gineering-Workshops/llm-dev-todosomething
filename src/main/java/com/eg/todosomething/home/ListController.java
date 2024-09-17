@@ -38,6 +38,7 @@ public class ListController {
 
         List<String> testList = redisTemplate.opsForList().range(TEST_LIST_KEY, 0, -1);
         StringWriter writer = new StringWriter();
+        assert testList != null;
         mustache.execute(writer, Map.of("testList", testList));
         return writer.toString();
     }
