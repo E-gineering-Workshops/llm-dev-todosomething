@@ -7,11 +7,13 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataRedisTest
 @ImportAutoConfiguration(exclude = RedisConfig.class)
+@ContextConfiguration(classes = {EmbeddedRedisConfig.class})
 public class ListControllerTest {
 
     @Autowired
