@@ -51,6 +51,13 @@ body {
     background-color: #d73a49;
 }
 
+.delete-btn:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .delete-btn:hover {
     background-color: #cb2431;
 }

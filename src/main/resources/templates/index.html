@@ -23,12 +23,18 @@
             <button class="btn add-btn">Add Item</button>
         </div>
     </form>
+    <form id="deleteForm" hx-delete="/deleteall" hx-target="#items-list" hx-swap="outerHTML">
+        <div class="input-group">
+            <button class="btn delete-btn">Delete All</button>
+        </div>
+    </form>
     <script>
         document.body.addEventListener('htmx:afterRequest', function (event) {
+
             if (event.detail.elt.id === 'addForm') {
                 event.detail.elt.reset();
             }
-        })
+        });
     </script>
 </div>
 </body>

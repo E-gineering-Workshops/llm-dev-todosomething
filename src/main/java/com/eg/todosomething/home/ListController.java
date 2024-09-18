@@ -4,10 +4,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -55,6 +52,13 @@ public class ListController {
     @ResponseBody
     public String delete(@RequestParam String item) {
         redisTemplate.opsForList().remove(TEST_LIST_KEY, 1, item);
+        return list();
+    }
+
+    @DeleteMapping("/deleteall")
+    @ResponseBody
+    public String deleteAll() {
+        redisTemplate.delete(TEST_LIST_KEY);
         return list();
     }
 
